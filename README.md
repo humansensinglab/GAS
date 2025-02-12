@@ -1,1 +1,2 @@
-# Generalizable-Human-Gaussians
+# GAS: Generative Avatar Synthesis from a Single Image
+project page
