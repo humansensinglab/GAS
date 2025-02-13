@@ -160,13 +160,6 @@
                                 </svg><br>
                                 Code
                             </a>
-                            <!-- <li class="nav-item text-center">
-                            <a href="https://1drv.ms/u/s!Aq9xVNM_DjPG5RDhuwsv4XaaP62v?e=A18c6Y" class="nav-link">
-                                <svg style="width:48px;height:48px" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M12,3C7.58,3 4,4.79 4,7C4,9.21 7.58,11 12,11C16.42,11 20,9.21 20,7C20,4.79 16.42,3 12,3M4,9V12C4,14.21 7.58,16 12,16C16.42,16 20,14.21 20,12V9C20,11.21 16.42,13 12,13C7.58,13 4,11.21 4,9M4,14V17C4,19.21 7.58,21 12,21C16.42,21 20,19.21 20,17V14C20,16.21 16.42,18 12,18C7.58,18 4,16.21 4,14Z" />
-                                </svg><br>
-                                Results
-                            </a> -->
                     </ul>
                 </div>
             </div>
@@ -262,15 +255,15 @@
                                 <video class="video-slide" src="./assets/videos/celeb-nvs.mp4" controls
                                 width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                 muted=""></video>
-<!--                                 <video class="video-slide" src="./assets/videos/novel-view.mp4" controls
+                                <video class="video-slide" src="./assets/videos/novel-view.mp4" controls
                                     width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
-                                    muted=""></video> -->
-                                <video class="video-slide" src="./assets/videos/novel-view-comparison-1.mp4" controls
+                                    muted=""></video>
+                                <!-- <video class="video-slide" src="./assets/videos/novel-view-comparison-1.mp4" controls
                                     width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                     muted=""></video>
                                     <video class="video-slide" src="./assets/videos/novel-view-comparison-2.mp4" controls
                                     width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
-                                    muted=""></video>
+                                    muted=""></video> -->
                             </div>
                             <button class="prev" onclick="changeSlide(-1, 'slider2')">&#10094;</button>
                             <button class="next" onclick="changeSlide(1, 'slider2')">&#10095;</button>
@@ -281,7 +274,7 @@
             <div class="row mb-4 pt-2">
                 <div class="col-md-8 mx-auto">
 
-                    <div id="nvs">
+                    <div id="np">
                         <h5>Novel pose animation</h5>
                         <p class="text-justify">
                             We demonstrate the capability of our method to synthesize temporal-coherent avatars with realistic deformations from a
@@ -295,18 +288,48 @@
                                 <video class="video-slide" src="./assets/videos/novel-pose-5.mp4" controls
                                 width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                 muted=""></video>
-                                <video class="video-slide" src="./assets/videos/novel-pose-comparison-1.mp4" controls
+                                <!-- <video class="video-slide" src="./assets/videos/novel-pose-comparison-1.mp4" controls
                                     width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                     muted=""></video>
                                 <video class="video-slide" src="./assets/videos/novel-pose-comparison-2.mp4" controls
                                     width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
-                                    muted=""></video>
+                                    muted=""></video> -->
                                     <video class="video-slide" src="./assets/videos/novel-pose-3.mp4" controls
                                     width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                     muted=""></video>
                             </div>
                             <button class="prev" onclick="changeSlide(-1, 'slider3')">&#10094;</button>
                             <button class="next" onclick="changeSlide(1, 'slider3')">&#10095;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4 pt-2">
+                <div class="col-md-8 mx-auto">
+
+                    <div id="comparisons">
+                        <h5>Comparison with baselines</h5>
+                        <p class="text-justify">
+                            We show the comparison with baselines on the task of novel view synthesis and novel pose animation.
+                        </p>
+                        <div class="slider-container">
+                            <div class="slider" id="slider4">
+                                <video class="video-slide" src="./assets/videos/novel-view-comparison-1.mp4" controls
+                                width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
+                                muted=""></video>
+                                <video class="video-slide" src="./assets/videos/novel-view-comparison-2.mp4" controls
+                                width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
+                                muted=""></video>
+                                <video class="video-slide" src="./assets/videos/novel-pose-comparison-1.mp4" controls
+                                    width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
+                                    muted=""></video>
+                                <video class="video-slide" src="./assets/videos/novel-pose-comparison-2.mp4" controls
+                                    width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
+                                    muted=""></video>
+                            </div>
+                            <button class="prev" onclick="changeSlide(-1, 'slider4')">&#10094;</button>
+                            <button class="next" onclick="changeSlide(1, 'slider4')">&#10095;</button>
                         </div>
                     </div>
                 </div>

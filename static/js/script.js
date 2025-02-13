@@ -2,7 +2,8 @@
 let slideIndices = {
     slider1: 0,
     slider2: 0,
-    slider3: 0
+    slider3: 0,
+    slider4: 0
 };
 
 function changeSlide(n, sliderId) {
@@ -34,14 +35,16 @@ function showSlides(n, sliderId) {
 showSlides(0, 'slider1');
 showSlides(0, 'slider2');
 showSlides(0, 'slider3');
+showSlides(0, 'slider4');
 
 let autoplay = true;
-let autoplayInterval = 11000; // Change slides every 5 seconds
+let autoplayInterval = 10000; // Change slides every 10 seconds
 
 if (autoplay) {
     setInterval(() => {
         changeSlide(1, 'slider1');
         changeSlide(1, 'slider2');
         changeSlide(1, 'slider3');
+        changeSlide(1, 'slider4');
     }, autoplayInterval);
 }
