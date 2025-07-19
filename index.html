@@ -217,7 +217,7 @@
                 <div class="col-md-8 mx-auto">
 
                     <div id="multi-scaffold">
-                        <h4>Results</h4>
+                        <h4>Applications</h4>
                         <h5>Interactive view and pose synthesis</h5>
                         <p class="text-justify">
                             Leveraging the unified framework, we enable interactive synthesis of human avatars, allowing
@@ -244,33 +244,56 @@
                     </div>
                 </div>
             </div>
+            <div class="row mb-4 pt-2">
+                <div class="col-md-8 mx-auto">
 
+                    <div id="multi-view-video">
+                        <h5>4D Consistent Multi-view Video Generation</h5>
+                        <p class="text-justify">
+                            By alternating the sampling between view and pose synthesis, we can generate synchronized multi-view videos of human performers from only a single image.
+                        </p>
+                        <div class="slider-container">
+                            <div class="slider" id="slider2">
+                                <video class="video-slide" src="./assets/videos/subject_200973_grid.mp4" controls
+                                width="80%" playsinline="" autoplay="autoplay" loop="loop" preload=""
+                                muted=""></video>
+                                <video class="video-slide" src="./assets/videos/subject_200970_grid.mp4" controls
+                                width="80%" playsinline="" autoplay="autoplay" loop="loop" preload=""
+                                muted=""></video>
+                                <video class="video-slide" src="./assets/videos/subject_200986_grid.mp4" controls
+                                width="80%" playsinline="" autoplay="autoplay" loop="loop" preload=""
+                                muted=""></video>          
+                                <video class="video-slide" src="./assets/videos/subject_200972_grid.mp4" controls
+                                width="80%" playsinline="" autoplay="autoplay" loop="loop" preload=""
+                                muted=""></video>     
+                                <video class="video-slide" src="./assets/videos/subject_200992_grid.mp4" controls
+                                width="80%" playsinline="" autoplay="autoplay" loop="loop" preload=""
+                                muted=""></video>        
+                            </div>
+                            <button class="prev" onclick="changeSlide(-1, 'slider2')">&#10094;</button>
+                            <button class="next" onclick="changeSlide(1, 'slider2')">&#10095;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row mb-4 pt-2">
                 <div class="col-md-8 mx-auto">
 
                     <div id="nvs">
+                        <h4>Results</h4>
                         <h5>Novel view synthesis</h5>
                         <p class="text-justify">
                             We demonstrate the capability of our method to synthesize view-consistent avatars from a
                             single image. 
                         </p>
                         <div class="slider-container">
-                            <div class="slider" id="slider2">
+                            <div class="slider" id="slider3">
                                 <video class="video-slide" src="./assets/videos/celeb-nvs.mp4" controls
                                 width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                 muted=""></video>
-<!--                                 <video class="video-slide" src="./assets/videos/novel-view.mp4" controls
-                                    width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
-                                    muted=""></video> -->
-                                <!-- <video class="video-slide" src="./assets/videos/novel-view-comparison-1.mp4" controls
-                                    width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
-                                    muted=""></video>
-                                    <video class="video-slide" src="./assets/videos/novel-view-comparison-2.mp4" controls
-                                    width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
-                                    muted=""></video> -->
                             </div>
-                            <button class="prev" onclick="changeSlide(-1, 'slider2')">&#10094;</button>
-                            <button class="next" onclick="changeSlide(1, 'slider2')">&#10095;</button>
+                            <button class="prev" onclick="changeSlide(-1, 'slider3')">&#10094;</button>
+                            <button class="next" onclick="changeSlide(1, 'slider3')">&#10095;</button>
                         </div>
                     </div>
                 </div>
@@ -285,25 +308,19 @@
                             single image. 
                         </p>
                         <div class="slider-container">
-                            <div class="slider" id="slider3">
+                            <div class="slider" id="slider4">
                                 <video class="video-slide" src="./assets/videos/novel-pose-4.mp4" controls
                                 width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                 muted=""></video>
                                 <video class="video-slide" src="./assets/videos/novel-pose-5.mp4" controls
                                 width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                 muted=""></video>
-                                <!-- <video class="video-slide" src="./assets/videos/novel-pose-comparison-1.mp4" controls
-                                    width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
-                                    muted=""></video>
-                                <video class="video-slide" src="./assets/videos/novel-pose-comparison-2.mp4" controls
-                                    width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
-                                    muted=""></video> -->
                                     <video class="video-slide" src="./assets/videos/novel-pose-3.mp4" controls
                                     width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                     muted=""></video>
                             </div>
-                            <button class="prev" onclick="changeSlide(-1, 'slider3')">&#10094;</button>
-                            <button class="next" onclick="changeSlide(1, 'slider3')">&#10095;</button>
+                            <button class="prev" onclick="changeSlide(-1, 'slider4')">&#10094;</button>
+                            <button class="next" onclick="changeSlide(1, 'slider4')">&#10095;</button>
                         </div>
                     </div>
                 </div>
@@ -318,7 +335,7 @@
                             We show the comparison with baselines on the task of novel view synthesis and novel pose animation.
                         </p>
                         <div class="slider-container">
-                            <div class="slider" id="slider4">
+                            <div class="slider" id="slider5">
                                 <video class="video-slide" src="./assets/videos/novel-view-comparison-1.mp4" controls
                                 width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                 muted=""></video>
@@ -332,17 +349,17 @@
                                     width="100%" playsinline="" autoplay="autoplay" loop="loop" preload=""
                                     muted=""></video>
                             </div>
-                            <button class="prev" onclick="changeSlide(-1, 'slider4')">&#10094;</button>
-                            <button class="next" onclick="changeSlide(1, 'slider4')">&#10095;</button>
+                            <button class="prev" onclick="changeSlide(-1, 'slider5')">&#10094;</button>
+                            <button class="next" onclick="changeSlide(1, 'slider5')">&#10095;</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <script src="./static/js/script.js"></script>
-            <div class="row mb-4" id="main-video">
+            <!-- <div class="row mb-4" id="main-video">
                 <div class="col-md-8 mx-auto grey-container">
-                    <h4 class="pb-2">Main Video</h4>
+                    <h4 class="pb-2">Video</h4>
                     <p>
                         In this video, we demonstrate results for in-the-wild avatar synthesis, comparisons with
                         baselines, ablation analysis and additional applications.
@@ -354,7 +371,7 @@
                             allowfullscreen></iframe>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="row mb-4" id="reference">
                 <div class="col-md-8 mx-auto grey-container">
                   <h4 class="pb-2">BibTeX</h4>
