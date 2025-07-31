@@ -189,7 +189,7 @@
                 <div class="col-md-8 mx-auto">
                     <h4 class="pb-2">Abstract</h4>
                     <p class="text-justify">
-                        We introduce a generalizable and unified framework to synthesize view-consistent and temporally coherent avatars from a single image, addressing the challenging problem of single-image avatar generation. While recent methods employ diffusion models conditioned on human templates like depth or normal maps, they often struggle to preserve appearance information due to the discrepancy between sparse driving signals and the actual human subject, resulting in multi-view and temporal inconsistencies. Our approach bridges this gap by combining the reconstruction power of regression-based 3D human reconstruction with the generative capabilities of a diffusion model. The dense driving signal from the initial reconstructed human provides comprehensive conditioning, ensuring high-quality synthesis faithful to the reference appearance and structure. Additionally, we propose a unified framework that enables the generalization learned from novel pose synthesis on in-the-wild videos to naturally transfer to novel view synthesis. Our video-based diffusion model enhances disentangled synthesis with high-quality view-consistent renderings for novel views and realistic non-rigid deformations in novel pose animation. Results demonstrate the superior generalization ability of our method across in-domain and out-of-domain in-the-wild datasets.
+                       We present a unified and generalizable framework for synthesizing view-consistent and temporally coherent avatars from a single image, addressing the challenging task of single-image avatar generation. Existing diffusion-based methods often condition on sparse human templates (e.g., depth or normal maps), which leads to multi-view and temporal inconsistencies due to the mismatch between these signals and the true appearance of the subject.  Our approach bridges this gap by combining the reconstruction power of regression-based 3D human reconstruction with the generative capabilities of a diffusion model. In a first step, an initial 3D reconstructed human through a generalized NeRF provides comprehensive conditioning, ensuring high-quality synthesis faithful to the reference appearance and structure.  Subsequently, the derived geometry and appearance from the generalized NeRF serve as input to a video-based diffusion model. This strategic integration is pivotal for enforcing both multi-view and temporal consistency throughout the avatar's generation. Empirical results underscore the superior generalization ability of our proposed method, demonstrating its effectiveness across diverse in-domain and out-of-domain in-the-wild datasets.
                     </p>
 
                 </div>
@@ -200,12 +200,7 @@
                 <div class="col-md-8 mx-auto grey-container">
                     <h4 class="pb-2">Method</h4>
                     <p class="text-justify">
-                        From a single input human image, our approach leverages a generalizable human NeRF to map the
-                        subject to canonical space, followed by reposing and rendering to obtain the appearance cue
-                        (i.e., NeRF renderings).
-                        Paired with the geometry cue (i.e., SMPL normal maps), they provide comprehensive conditions for
-                        the video diffusion model, enabling multi-view consistent novel view synthesis or temporally
-                        consistent pose animation, effectively disentangled by a switcher module.
+Starting from a single input image, GAS uses a generalizable human NeRF to map the subject into a canonical space, then reposes and renders the 3D NeRF model to extract detailed appearance cues (i.e., NeRF renderings). These are paired with geometry cues (i.e., SMPL normal maps) and fed into a video diffusion model. A switcher module disentangles the tasks, enabling the model to generate either multi-view consistent novel views or temporally coherent pose animations.
                     </p>
                     <img src="./assets/images/method_overview.png" class="img-responsive" alt="pipeline">
                 </div>
