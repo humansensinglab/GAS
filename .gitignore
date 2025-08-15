@@ -2,6 +2,7 @@ demo_images/
 reference_images_freeview_smpl/
 reference_images_freeview_nerf/
 pretrained_models/
+!scripts/pretrained_models/
 results/
 4D-Humans/
 modules/sherf/assets/
