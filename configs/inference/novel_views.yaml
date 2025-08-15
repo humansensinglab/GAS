@@ -1,0 +1,50 @@
+# real world data multiview
+
+exp_name: real_world_data_mv
+width: 512
+height: 512
+
+
+data:
+  video_length: 20
+
+
+seed: 42
+
+
+ckpt_dir: pretrained_models/GAS
+svd_base_path: pretrained_models/stable-video-diffusion-img2vid-xt-1-1
+unet_path: pretrained_models/stable-video-diffusion-img2vid-xt-1-1/unet
+vae_model_path: pretrained_models/stable-video-diffusion-img2vid-xt-1-1/vae
+image_encoder_path: pretrained_models/stable-video-diffusion-img2vid-xt-1-1/image_encoder
+scheduler_path: pretrained_models/stable-video-diffusion-img2vid-xt-1-1/scheduler
+
+num_inference_steps: 25
+guidance_scale: 2.0
+enable_zero_snr: true
+weight_dtype: "fp16"
+frames_overlap: 6
+noise_aug_strength: 0
+
+solver:
+  gradient_accumulation_steps: 1
+  mixed_precision: 'fp16'
+  enable_xformers_memory_efficient_attention: True 
+  gradient_checkpointing: False 
+  max_train_steps: 100000
+  max_grad_norm: 1.0
+  # lr
+  learning_rate: 1.0e-5
+  scale_lr: False 
+  lr_warmup_steps: 1
+  lr_scheduler: 'constant'
+
+  # optimizer
+  use_8bit_adam: True 
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_weight_decay:  1.0e-2
+  adam_epsilon: 1.0e-8
+
+
+enable_xformers_memory_efficient_attention: true
