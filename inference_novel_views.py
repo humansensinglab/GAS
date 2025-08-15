@@ -170,26 +170,23 @@ def main(cfg, img_path):
     pose_net = PoseNet(noise_latent_channels=denoising_unet.config.block_out_channels[0]).to(device="cuda")
     nerf_net = NeRFNet(noise_latent_channels=denoising_unet.config.block_out_channels[0]).to(device="cuda")
     ckpt_dir = cfg.ckpt_dir
-    ckpt_files = sorted(os.listdir(ckpt_dir), key=lambda x: int(x.split("-")[-1].split(".")[0]))
-    latest_pth_name = (Path(ckpt_dir) / ckpt_files[-1]).stem
-    ckpt_step = int(latest_pth_name.split("-")[-1])
 
     denoising_unet.load_state_dict(
         torch.load(
-            os.path.join(ckpt_dir, f'unet-{ckpt_step}.pth'),
+            os.path.join(ckpt_dir, f'unet.pth'),
             map_location="cpu",
         ),
     )
     pose_net.load_state_dict(
         torch.load(
-            os.path.join(ckpt_dir, f'pose_net-{ckpt_step}.pth'),
+            os.path.join(ckpt_dir, f'pose_net.pth'),
             map_location="cpu",
         ),
     )
 
     nerf_net.load_state_dict(
         torch.load(
-            os.path.join(ckpt_dir, f'nerf_net-{ckpt_step}.pth'),
+            os.path.join(ckpt_dir, f'nerf_net.pth'),
             map_location="cpu",
         ),
     )

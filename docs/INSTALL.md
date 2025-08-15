@@ -17,7 +17,7 @@ pip install -r requirements.txt
 
 ### 2. Prepare for human foreground segmentation
 ```
-cd annotator/grounded-sam/GroundingDINO
+cd modules/grounded-sam/GroundingDINO
 pip install -e .
 
 cd ../segment_anything
