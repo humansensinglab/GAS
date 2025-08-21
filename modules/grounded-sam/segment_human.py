@@ -135,7 +135,7 @@ def get_filelist(todo_list, i):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Grounded-Segment-Anything Demo", add_help=True)
-    parser.add_argument("--config", type=str, default="annotator/grounded-sam/GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py", help="path to config file")
+    parser.add_argument("--config", type=str, default="modules/grounded-sam/GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py", help="path to config file")
     parser.add_argument(
         "--grounded_checkpoint", type=str, default="groundingdino_swint_ogc.pth", help="path to checkpoint file"
     )

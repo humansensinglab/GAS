@@ -8,7 +8,6 @@ from tqdm import tqdm
 import platform
 import pyrender
 import sys
-sys.path.append('4D-Humans')
 sys.path.append('./')
 from scripts.pretrained_models import (
     DETECTRON2_MODEL_PATH,
@@ -21,7 +20,7 @@ if "PYOPENGL_PLATFORM" not in os.environ:
 from hmr2.models import load_hmr2
 from hmr2.utils import recursive_to
 from hmr2.datasets.vitdet_dataset import ViTDetDataset
-from hmr2.utils.renderer import Renderer, cam_crop_to_full
+from hmr2.utils.renderer import cam_crop_to_full
 from scripts.data_processors.smpl.smpl_visualizer import SemanticRenderer
 
 # For Windows, remove PYOPENGL_PLATFORM to enable default rendering backend

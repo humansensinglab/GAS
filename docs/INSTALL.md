@@ -29,11 +29,11 @@ cd ../../..
 ### 3. Prepare for SMPL estimation & rendering
 We use [SMPL & Rendering scripts](https://github.com/fudan-generative-vision/champ/blob/master/docs/data_process.md) to estimate SMPL and render normal maps. 
 
-<details>
+<details open>
 <summary>Checklist</summary>
 
 - Install blender
-- Install 4D-Humans under this project directory; 
+- Install 4D-Humans `pip install git+https://github.com/shubham-goel/4D-Humans`; 
 use `python -m scripts.pretrained_models.download --hmr2` to download the checkpoints
 - Install detectron2; use `python -m scripts.pretrained_models.download --detectron2` to download the checkpoints
 </details>
