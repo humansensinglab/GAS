@@ -12,7 +12,7 @@
 ![Teaser figure](assets/teaser.png)
 ## Code release plan
 - [x] Inference code for novel view synthesis
-- [ ] GAS checkpoints release on Hugging Face 
+- [x] GAS checkpoints release on Hugging Face 
 - [ ] Inference code for novel pose synthesis
 - [ ] Inference code for synchronized multi-view video generation
 
