@@ -129,13 +129,12 @@ class SingleDataset:
         # smpl_suffixes = 'npy' # NOTE only allow npy files here: exclude smpls_group_smooth.npz and 
         reference_image_name = os.path.basename(reference_image_path).split(".")[0]
         self.smpl_folder = Path(smpl_folder)
-        self.out_folder = Path("reference_images_freeview_smpl") / reference_image_name
+        self.out_folder = self.smpl_folder / "reference_images_freeview_smpl"
         self.smpl_paths = []
         self.bboxes = []
         self.valid_index = []
         
         
-        # import pdb; pdb.set_trace()
         self.smpl_paths = sorted(
             [
                 path for i in smpl_suffixes
@@ -159,7 +158,6 @@ class SingleDataset:
         output_paths_copy = list(self.output_paths)
         self.smpl_paths = [smpl_paths_copy[img_index] for img_index in imgs_index_to_inference]
         self.output_paths = [output_paths_copy[img_index] for img_index in imgs_index_to_inference]
-        print("output paths: ", self.output_paths)
         print(f"finish loading {imgs_index_to_inference.shape[0]} frames data, \
               skip {len(smpl_fns) - imgs_index_to_inference.shape[0]} existing images")
 
@@ -203,6 +201,8 @@ def rendering_pipeline(dataset, ref_img_path):
     scene.render.use_persistent_data = True
     scene.cycles.use_denoising = False
 
+    scene.use_nodes = False
+    
     camera = bpy.data.objects["Camera"]
     camera.data.clip_start = 0.05
     camera.data.clip_end = 1e12
@@ -286,7 +286,7 @@ def rendering_pipeline(dataset, ref_img_path):
             bpy.data.worlds["World"].node_tree.nodes["Background"].inputs[0].default_value = (0, 0, 0, 1)
             output_name = f"{smpl_fn}.png"
 
-            normal_path = os.path.join(render_path, "normal", view_name, output_name)
+            normal_path = os.path.join(render_path, view_name, output_name)
 
             scene.render.filepath = normal_path
             for layer in render_layers:

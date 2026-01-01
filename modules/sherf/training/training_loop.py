@@ -225,7 +225,6 @@ def training_loop(
     # Setup training phases.
     if rank == 0:
         print('Setting up training phases...')
-    loss = dnnlib.util.construct_class_by_name(device=device, G=G, D=D, augment_pipe=augment_pipe, **loss_kwargs) # subclass of training.loss.Loss
     phases = []
     for name, module, opt_kwargs, reg_interval in [('G', G, G_opt_kwargs, G_reg_interval), ('D', D, D_opt_kwargs, D_reg_interval)]:
     # for name, module, opt_kwargs, reg_interval in [('G', G, G_opt_kwargs, G_reg_interval)]:
@@ -275,22 +274,32 @@ def training_loop(
         if rank == 0:
             if test_mode == "original":
                 pass
-
-            elif test_mode == "gen_multiview_same_pose":
-                pass
             
             elif test_mode == "freeview":
                 from training.test_single_image_novel_views import test     # single view novel view synthesis demo
-                current_file = Path(__file__).resolve()
-                testsavedir = current_file.parents[3] / 'reference_images_freeview_nerf'
+                testsavedir = Path(training_set_kwargs.data_root).parent / 'reference_images_freeview_nerf'
                 print('NeRF renderings save dir: ', testsavedir)
                 os.makedirs(testsavedir, exist_ok=True)
                 with torch.no_grad():
                     if cfg == 'TikTok':
                         test(G, savedir=testsavedir, neural_rendering_resolution=loss_kwargs['neural_rendering_resolution_initial'], rank=0, use_sr_module=use_sr_module, white_back=False, sample_obs_view=training_set_kwargs.sample_obs_view, fix_obs_view=training_set_kwargs.fix_obs_view, dataset_name=cfg, data_root=training_set_kwargs.data_root, obs_view_lst=[14], nv_pose_start=0, np_pose_start=5, pose_interval=20, pose_num=25)   
             
-            elif test_mode == "gen_multipose_same_view":
-                pass
+            elif test_mode == "pose":
+                from training.test_single_image_novel_poses import test
+                testsavedir = Path(training_set_kwargs.data_root) / 'reference_images_pose_nerf'
+                print('NeRF renderings save dir: ', testsavedir)
+                os.makedirs(testsavedir, exist_ok=True)
+                with torch.no_grad():
+                    if cfg == 'TikTok':
+                        test(G, savedir=testsavedir, neural_rendering_resolution=loss_kwargs['neural_rendering_resolution_initial'], 
+                             rank=0, use_sr_module=use_sr_module, white_back=False, 
+                             sample_obs_view=training_set_kwargs.sample_obs_view, fix_obs_view=training_set_kwargs.fix_obs_view, 
+                             dataset_name=cfg, data_root=training_set_kwargs.data_root, 
+                             obs_view_lst=[14], nv_pose_start=0, np_pose_start=5, pose_interval=20, pose_num=25,
+                             obs_pose_index=0,
+                             
+                             )  
+
 
 
         exit(0)

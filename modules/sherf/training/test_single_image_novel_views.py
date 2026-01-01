@@ -95,9 +95,8 @@ def test(model, savedir=None, neural_rendering_resolution=128, rank=0, use_sr_mo
 
         data_root = human_data_path.strip()
         human_name = os.path.basename(data_root)
-        savedir_human = os.path.join(savedir, human_name.split(".")[0]) 
 
-        os.makedirs(savedir_human, exist_ok=True)
+        os.makedirs(savedir, exist_ok=True)
         
         test_dataset_kwargs = dnnlib.EasyDict(class_name=class_name, data_root=data_root, split='test', multi_person=False
         , num_instance=1, poses_start=pose_start, poses_interval=pose_interval, poses_num=pose_num, image_scaling=image_scaling, white_back=white_back, sample_obs_view=sample_obs_view, fix_obs_view=fix_obs_view, 
@@ -123,7 +122,7 @@ def test(model, savedir=None, neural_rendering_resolution=128, rank=0, use_sr_mo
             for j in range(batch_size):
 
                 img_pred = (gen_img['image'][j] / 2 + 0.5).permute(1,2,0)
-                pred_filename = os.path.join(savedir_human, 'pose_{:04d}_view_{:04d}.png'.format(int(test_data['pose_index'][j]), view_id))
+                pred_filename = os.path.join(savedir, 'pose_{:04d}_view_{:04d}.png'.format(int(test_data['pose_index'][j]), view_id))
 
                 imageio.imwrite(pred_filename, to8b(img_pred.cpu().numpy()))
 

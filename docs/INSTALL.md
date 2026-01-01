@@ -5,7 +5,7 @@ git clone https://github.com/humansensinglab/GAS.git
 cd GAS
 
 # set up conda environment
-conda create -n GAS python=3.11
+conda create -n GAS python=3.11 -y
 conda activate GAS 
 
 # make sure that the pytorch cuda is consistent with the system cuda
@@ -27,20 +27,47 @@ cd ../../..
 ```
 
 ### 3. Prepare for SMPL estimation & rendering
-We use [SMPL & Rendering scripts](https://github.com/fudan-generative-vision/champ/blob/master/docs/data_process.md) to estimate SMPL and render normal maps. 
+We use SMPL & Rendering scripts from Champ to estimate SMPL and render normal maps. Please refer to [their doc](https://github.com/fudan-generative-vision/champ/blob/master/docs/data_process.md) for details. You may make minor changes according to your device setup.
 
-<details open>
-<summary>Checklist</summary>
-
-- Install blender
-- Install 4D-Humans `pip install git+https://github.com/shubham-goel/4D-Humans`; 
-use `python -m scripts.pretrained_models.download --hmr2` to download the checkpoints
-- Install detectron2; use `python -m scripts.pretrained_models.download --detectron2` to download the checkpoints
-</details>
-
-### 4. Prepare for human NeRF rendering
-Register and download SMPL NEUTRAL model [here](https://smpl.is.tue.mpg.de/). See the folder structure below. 
+1. Install Blender
 ```
+# Download blender
+wget https://download.blender.org/release/Blender3.6/blender-3.6.0-linux-x64.tar.xz
+
+# unzip this file
+...
+
+# Optionally create a soft link for easier calls
+...
+```
+2. Install 4D-Humans 
+```
+# Install 4D-Humans
+pip install git+https://github.com/shubham-goel/4D-Humans
+
+# Download its checkpoints
+python -m scripts.pretrained_models.download --hmr2
+```
+
+3. Install detectron2
+```
+# Download checkpoints
+python -m scripts.pretrained_models.download --detectron2
+```
+
+### 4. Register SMPL Model
+Register and download SMPL NEUTRAL model [here](https://smpl.is.tue.mpg.de/). 
+
+- Copy it to your 4D-Humans installation directory
+```
+cp basicModel_neutral_lbs_10_207_0_v1.0.0.pkl /path/to/4DHumans/data/basicModel_neutral_lbs_10_207_0_v1.0.0.pkl
+```
+- Copy it to your sherf directory.
+
+```
+cp basicModel_neutral_lbs_10_207_0_v1.0.0.pkl modules/sherf/assets/SMPL_NEUTRAL.pkl
+
+# file structure should be as below
 ./
 ├── modules/
     ├── sherf/

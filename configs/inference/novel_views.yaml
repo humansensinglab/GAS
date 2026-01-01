@@ -1,12 +1,14 @@
-# real world data multiview
+# novel view synthesis
 
-exp_name: real_world_data_mv
+exp_name: novel_view
 width: 512
 height: 512
 
 
 data:
   video_length: 20
+  obs_img_path: assets/demo_images/demo1.png
+
 
 
 seed: 42

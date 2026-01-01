@@ -137,11 +137,8 @@ if __name__ == "__main__":
 
 
     if args.driving_video_path: 
-        # include all videos
-        # driving_videos_paths = [args.driving_video_path]
-        driving_videos_paths = [path
-        for path in os.listdir(args.driving_video_path)
-        ]
+        images_dir = Path(args.driving_video_path) / "images"
+        driving_videos_paths = [str(p) for p in images_dir.iterdir()]
         driving_videos_paths = sorted(driving_videos_paths)
 
     model, model_cfg = load_hmr2(HMR2_DEFAULT_CKPT)
@@ -169,42 +166,76 @@ if __name__ == "__main__":
         lbs=model.smpl.lbs_weights,
         viewport_size=(720, 720),
     )
-
-    reference_img_paths = [args.reference_img_path]
-    args.reference_imgs_folder = os.path.dirname(reference_img_paths[0])
-    for img_path in tqdm(reference_img_paths, desc="Processing Reference Images:"):
-        img_cv2 = cv2.imread(args.reference_img_path)
-
-        renderer.renderer.delete()
-        renderer.renderer = pyrender.OffscreenRenderer(
-            viewport_width=img_cv2.shape[:2][::-1][0],
-            viewport_height=img_cv2.shape[:2][::-1][1],
-            point_size=1.0,
-        )
-        img_fn, _ = os.path.splitext(os.path.basename(img_path))
-        dataloader = load_image(img_cv2, detector)
-
-        for batch in dataloader:
-            batch = recursive_to(batch, args.device)
-            results_dict_for_rendering, misc_args = predict_smpl(batch, model, model_cfg, args.figure_scale)
-
-            rendering_results = renderer.render_all_multiple(
-                results_dict_for_rendering["verts"], 
-                cam_t=results_dict_for_rendering["cam_t"], 
-                render_res=results_dict_for_rendering["render_res"], **misc_args
+    if args.reference_img_path:
+        reference_img_paths = [args.reference_img_path]
+        args.reference_imgs_folder = os.path.dirname(reference_img_paths[0])
+        for img_path in tqdm(reference_img_paths, desc="Processing Reference Images:"):
+            img_cv2 = cv2.imread(args.reference_img_path)
+            renderer.renderer.delete()
+            renderer.renderer = pyrender.OffscreenRenderer(
+                viewport_width=img_cv2.shape[:2][::-1][0],
+                viewport_height=img_cv2.shape[:2][::-1][1],
+                point_size=1.0,
             )
-            # Overlay image
-            valid_mask = rendering_results["Image"][:, :, -1][:, :, np.newaxis]
-            cam_view = (
-                valid_mask * rendering_results["Image"][:, :, [2, 1, 0]]
-                + (1 - valid_mask) * img_cv2.astype(np.float32)[:, :, ::-1] / 255
-            )
-            os.makedirs(
-                os.path.join(args.reference_imgs_folder, "smpl_results",),
-                exist_ok=True
-            )
-            np.save(
-                str(os.path.join(args.reference_imgs_folder, "smpl_results", f"{img_fn}.npy")),
-                results_dict_for_rendering)
+            img_fn, _ = os.path.splitext(os.path.basename(img_path))
+            dataloader = load_image(img_cv2, detector)
 
-  
+            for batch in dataloader:
+                batch = recursive_to(batch, args.device)
+                results_dict_for_rendering, misc_args = predict_smpl(batch, model, model_cfg, args.figure_scale)
+
+                rendering_results = renderer.render_all_multiple(
+                    results_dict_for_rendering["verts"], 
+                    cam_t=results_dict_for_rendering["cam_t"], 
+                    render_res=results_dict_for_rendering["render_res"], **misc_args
+                )
+                # Overlay image
+                valid_mask = rendering_results["Image"][:, :, -1][:, :, np.newaxis]
+                cam_view = (
+                    valid_mask * rendering_results["Image"][:, :, [2, 1, 0]]
+                    + (1 - valid_mask) * img_cv2.astype(np.float32)[:, :, ::-1] / 255
+                )
+                os.makedirs(
+                    os.path.join(args.reference_imgs_folder, "smpl_results",),
+                    exist_ok=True
+                )
+                np.save(
+                    str(os.path.join(args.reference_imgs_folder, "smpl_results", f"{img_fn}.npy")),
+                    results_dict_for_rendering)
+
+    if args.driving_video_path: 
+        save_path = os.path.join(args.driving_video_path, 'smpl_results')
+        os.makedirs(
+                    save_path,
+                    exist_ok=True
+                )
+        for img_path in tqdm(driving_videos_paths, desc="Processing Driving Video Images:"):
+            img_cv2 = cv2.imread(img_path)
+
+            renderer.renderer.delete()
+            renderer.renderer = pyrender.OffscreenRenderer(
+                viewport_width=img_cv2.shape[:2][::-1][0],
+                viewport_height=img_cv2.shape[:2][::-1][1],
+                point_size=1.0,
+            )
+            img_fn, _ = os.path.splitext(os.path.basename(img_path))
+            dataloader = load_image(img_cv2, detector)
+
+            for batch in dataloader:
+                batch = recursive_to(batch, args.device)
+                results_dict_for_rendering, misc_args = predict_smpl(batch, model, model_cfg, args.figure_scale)
+
+                rendering_results = renderer.render_all_multiple(
+                    results_dict_for_rendering["verts"], 
+                    cam_t=results_dict_for_rendering["cam_t"], 
+                    render_res=results_dict_for_rendering["render_res"], **misc_args
+                )
+                # Overlay image
+                valid_mask = rendering_results["Image"][:, :, -1][:, :, np.newaxis]
+                cam_view = (
+                    valid_mask * rendering_results["Image"][:, :, [2, 1, 0]]
+                    + (1 - valid_mask) * img_cv2.astype(np.float32)[:, :, ::-1] / 255
+                )
+                np.save(
+                    str(os.path.join(save_path, f"{img_fn}.npy")),
+                    results_dict_for_rendering)

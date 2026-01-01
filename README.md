@@ -11,10 +11,9 @@
 
 ![Teaser figure](assets/teaser.png)
 ## Code release plan
+- [x] Checkpoints release on Hugging Face 
 - [x] Inference code for novel view synthesis
-- [x] GAS checkpoints release on Hugging Face 
-- [ ] Inference code for novel pose synthesis
-- [ ] Inference code for synchronized multi-view video generation
+- [x] Inference code for novel pose synthesis
 
 ## Requirements
 * An NVIDIA GPU with CUDA support is required. 
@@ -26,17 +25,37 @@ Instructions can be found in [INSTALL.md](docs/INSTALL.md).
 
 
 ## Inference
-Create a folder `demo_images` inside the project directory and move your testing image into it, e.g., GAS/demo_images/image.png. 
+We support both view and pose synthesis tasks. For each task, we present a quick demo and guidelines for running with custom data.
+
 ### Novel view synthesis
+#### Quick demo
 ```
 bash demo_scripts/nv.sh
 ```
+#### Run with custom data
+If you want to use your own image for inference, please create a new folder (e.g., `assets/demo_images` in our case) and move your own image into this folder. Note that all the intermediate renderings and the final result will be generated inside this folder. 
+
+To run with custom data, 
+- `demo_scripts/nv.sh`: Replace the `IMAGE_PATH` in L3 with your own image path. 
+- `configs/inference/novel_views.yaml`: Replace `data.obs_img_path` in L10 with your own image path
+
 
 ### Novel pose synthesis
-TBD
+#### Quick demo
+```
+bash demo_scripts/np.sh
+```
+In this quick demo, we do self-reenactment. If you want to do cross-reenactment, you need to transfer the SMPL shape of the source image to the target SMPL parameters. 
 
-### Multi-view video generation
-TBD
+#### Run with custom data
+If you want to use your own source image / driving video for inference, please create a new folder (e.g., `assets/demo_videos` in our case) and move your own video into this folder. Note that all the intermediate renderings and the final result will be generated inside this folder. 
+
+For the configs, you need to do the following modifications:
+
+- `demo_scripts/np.sh`: Make your driving video path be `VIDEO_PATH` in L4; source image path be `IMAGE_PATH` in L9
+
+- `configs/inference/novel_pose.yaml`: L9 `data.obs_img_path` be your source image path; L10  `data.driving_video_dir` be the parent folder that contains the driving video
+
 
 ## Citation
 

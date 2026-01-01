@@ -1,6 +1,6 @@
 #!/bin/bash
-
-IMAGE_PATH="/path/to/input/image.png"
+PROJECT_ROOT="$PWD"
+IMAGE_PATH="assets/demo_images/demo1.png"
 
 # check if this image file exists
 if [ ! -f "$IMAGE_PATH" ]; then
@@ -26,14 +26,14 @@ python scripts/data_processors/smpl/estimate_smpl.py --reference_img_path "$IMAG
 
 
 # render SMPL normals
-/data/yixing/blender-3.6.0-linux-x64/blender scripts/data_processors/smpl/blend/smpl_rendering.blend --background --python scripts/data_processors/smpl/render_smpl_normal_map_nv.py --driving_path demo_images --reference_path "$IMAGE_PATH"
+blender scripts/data_processors/smpl/blend/smpl_rendering.blend --background --python scripts/data_processors/smpl/render_smpl_normal_map_nv.py -- --driving_path assets/demo_images --reference_path "$IMAGE_PATH"
 
 
 
 
 # render generalizable human nerf
 cd modules/sherf
-python -u train.py --outdir=logs/tiktok/ --cfg=TikTok --data="$IMAGE_PATH" --gpus=1 --batch=1 --gamma=5 --aug=noaug --neural_rendering_resolution_initial=512 --gen_pose_cond=True --gpc_reg_prob=0.8 --kimg 800 --workers 0 --use_1d_feature True --use_2d_feature True --use_3d_feature True --use_sr_module False --sample_obs_view True --fix_obs_view False --use_nerf_decoder True --use_trans True --test_flag True \
+python -u train.py --outdir=logs/tiktok/ --cfg=TikTok --data="$PROJECT_ROOT/$IMAGE_PATH" --gpus=1 --batch=1 --gamma=5 --aug=noaug --neural_rendering_resolution_initial=512 --gen_pose_cond=True --gpc_reg_prob=0.8 --kimg 800 --workers 0 --use_1d_feature True --use_2d_feature True --use_3d_feature True --use_sr_module False --sample_obs_view True --fix_obs_view False --use_nerf_decoder True --use_trans True --test_flag True \
 --resume ../../pretrained_models/sherf/network-snapshot.pkl \
 --test_mode freeview
 
@@ -44,4 +44,4 @@ rm -r logs
 
 cd ../..
 # run diffusion model
-CUDA_VISIBLE_DEVICES=0 accelerate launch inference_novel_views.py --config configs/inference/novel_views.yaml --img_path "$IMAGE_PATH"
+CUDA_VISIBLE_DEVICES=0 python inference_novel_views.py --config configs/inference/novel_views.yaml

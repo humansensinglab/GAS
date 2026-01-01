@@ -1,6 +1,7 @@
 import torchvision.transforms as transforms
 from PIL import Image, ImageOps
 import sys
+from pathlib import Path
 
 def pad_to_square(image_path, output_path, fill_color=(0, 0, 0)):
     """
@@ -28,12 +29,37 @@ def pad_to_square(image_path, output_path, fill_color=(0, 0, 0)):
     # Save the output image
     squared_img.save(output_path, format="PNG")
 
+def is_image_file(path: Path) -> bool:
+    return path.suffix.lower() in ['.png']
 if __name__ == "__main__":
-    pad_to_square(sys.argv[1], sys.argv[1], fill_color=(255, 255, 255))
+    input_path = Path(sys.argv[1])
+    
+    if not input_path.exists():
+        raise FileNotFoundError(f"{input_path} does not exist")
 
-    transform = transforms.RandomResizedCrop(size=512, scale=(1.0, 1.0), ratio=(1.0, 1.0))
-    image_path = sys.argv[1]
-    save_path = image_path
-    image = Image.open(image_path).convert("RGB")
-    transformed_image = transform(image)
-    transformed_image.save(save_path)
+    output_dir = input_path if input_path.is_dir() else input_path.parent
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    paths_to_process = []
+
+    if input_path.is_file():
+        if is_image_file(input_path):
+            paths_to_process = [input_path]
+        else:
+            raise ValueError(f"Not an image: {input_path}")
+    elif input_path.is_dir():
+        for p in input_path.iterdir():
+            if p.is_file() and is_image_file(p):
+                paths_to_process.append(p)
+        if not paths_to_process:
+            print(f"No image file inside this dir")
+    else:
+        raise ValueError("Invalid input path")
+    
+    transform = transforms.Resize((512, 512), antialias=True)
+    for img_path in paths_to_process:
+        pad_to_square(img_path, img_path, fill_color=(255, 255, 255))
+        image = Image.open(img_path).convert("RGB")
+        transformed_image = transform(image)
+        transformed_image.save(img_path)

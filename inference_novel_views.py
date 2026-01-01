@@ -3,11 +3,9 @@ import logging
 import os
 import os.path as osp
 from datetime import datetime
-from pathlib import Path
 
 import numpy as np
 import torch
-import torch.utils.checkpoint
 from torchvision import transforms
 from diffusers import AutoencoderKLTemporalDecoder
 from diffusers.utils.import_utils import is_xformers_available
@@ -33,10 +31,11 @@ from utils.video_utils import save_videos_grid
 
 def setup_savedir(cfg):
     time_str = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
+    base_dir = os.path.dirname(cfg.data.obs_img_path)
     if cfg.exp_name is None:
-        savedir = f"results/exp-{time_str}"
+        savedir = f"{base_dir}/results/exp-{time_str}"
     else:
-        savedir = f"results/{cfg.exp_name}-{time_str}"
+        savedir = f"{base_dir}/results/{cfg.exp_name}-{time_str}"
 
     os.makedirs(savedir, exist_ok=True)
 
@@ -136,7 +135,7 @@ def inference(
     return _video_frames
     
 
-def main(cfg, img_path):
+def main(cfg):
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
         datefmt="%m/%d/%Y %H:%M:%S",
@@ -205,15 +204,13 @@ def main(cfg, img_path):
             )
 
     to_tensor = transforms.ToTensor()
+    img_path = cfg.data.obs_img_path
     img_name = os.path.basename(img_path).split(".")[0]
-    normal_folder = "reference_images_freeview_smpl/"
-    nerf_folder = "reference_images_freeview_nerf/"
+    normal_dir = os.path.join(os.path.dirname(img_path), 'reference_images_freeview_smpl')
+    nerf_dir = os.path.join(os.path.dirname(img_path), 'reference_images_freeview_nerf')
     all_subjects = [img_name]
 
     for subject in all_subjects:
-
-        nerf_dir = os.path.join(nerf_folder, subject)
-        normal_dir = os.path.join(normal_folder, subject)
 
         obs_img_path = img_path
         obs_img_mask_path = os.path.join(os.path.dirname(img_path), "groundsam_vis", f"{img_name}.png.mask.png")
@@ -228,7 +225,7 @@ def main(cfg, img_path):
         for _, cam_name in enumerate(camera_trajectory):
             # SMPL normal condition
             cam_name = str(cam_name).zfill(2)
-            smpl_image_path = os.path.join(normal_dir, 'normal', str(cam_name).zfill(2), f'{img_name}.png')
+            smpl_image_path = os.path.join(normal_dir, str(cam_name).zfill(2), f'{img_name}.png')
             smpl_img_pil = Image.open(smpl_image_path)
             smpl_vidpil_lst.append(to_tensor(smpl_img_pil))
 
@@ -275,7 +272,6 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str, default="./configs/inference.yaml")
-    parser.add_argument("--img_path", type=str, default="./")
     args = parser.parse_args()
 
     if args.config[-5:] == ".yaml":
@@ -283,7 +279,7 @@ if __name__ == "__main__":
     else:
         raise ValueError("Do not support this format config file")
 
-    main(cfg, args.img_path)
+    main(cfg)
 
 
 
